@@ -30,12 +30,6 @@ app.get('/health', (_req: Request, res: Response) => {
 app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
-// Global error handler
-app.use((_err: Error, _req: Request, res: Response) => {
-  // Do not leak internals
-  res.status(500).json({ message: 'Internal Server Error' });
-});
-
 const port = Number(process.env.PORT || 3000);
 
 runMigrations()
