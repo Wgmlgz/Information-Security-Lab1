@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
@@ -31,8 +31,7 @@ app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
 // Global error handler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+app.use((_err: Error, _req: Request, res: Response) => {
   // Do not leak internals
   res.status(500).json({ message: 'Internal Server Error' });
 });
@@ -41,13 +40,11 @@ const port = Number(process.env.PORT || 3000);
 
 runMigrations()
   .then(() => {
-    app.listen(port, () => {
-      // eslint-disable-next-line no-console
-      console.log(`Server listening on port ${port}`);
-    });
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
   })
   .catch((err) => {
-    // eslint-disable-next-line no-console
     console.error('Migration failed', err);
     process.exit(1);
   });

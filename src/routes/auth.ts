@@ -40,7 +40,7 @@ router.post('/login', async (req: Request, res: Response) => {
       algorithm: 'HS256',
     });
     res.status(200).json({ token });
-  } catch (e) {
+  } catch {
     res.status(500).json({ message: 'Login failed' });
   }
 });
